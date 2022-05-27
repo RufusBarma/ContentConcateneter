@@ -5,7 +5,7 @@ public class HttpDownloader: IDownloader
 	public async Task Download(string url, string outPath, string name)
 	{
 		var httpClient = new HttpClient();
-		httpClient.Timeout = new TimeSpan(0, 30, 0);
+		// httpClient.Timeout = new TimeSpan(0, 30, 0);
 		var filename = Path.GetFileName(new Uri(url).LocalPath);
 		var response = await httpClient.GetAsync(url);
 		await using var stream = await response.Content.ReadAsStreamAsync();

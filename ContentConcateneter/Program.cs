@@ -27,6 +27,7 @@ var serviceProvider = new ServiceCollection()
 		return new MongoClient(mongoUrl).GetDatabase(mongoUrl.DatabaseName);
 	})
 	.AddTransient<IMongoCollection<Link>>(provider => provider.GetRequiredService<IMongoDatabase>().GetCollection<Link>("Links"))
+	.AddTransient<IMongoCollection<DownloadedLinks>>(provider => provider.GetRequiredService<IMongoDatabase>().GetCollection<DownloadedLinks>("DownloadedLinks"))
 	.BuildServiceProvider();
 
 var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
@@ -43,4 +44,4 @@ AppDomain.CurrentDomain.ProcessExit += async (_, _) =>
 	await serviceProvider.DisposeAsync();
 };
 
-await Task.Delay(Timeout.Infinite, cancellationTokenSource.Token);
+await startupTask;// Task.Delay(Timeout.Infinite, cancellationTokenSource.Token);
